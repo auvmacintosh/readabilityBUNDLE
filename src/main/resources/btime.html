@@ -1,0 +1,525 @@
+<!DOCTYPE html><!--[if lt IE 7 ]><html class="ie6" lang="zh-cn"><![endif]--><!--[if IE 7 ]><html class="ie7" lang="zh-cn"><![endif]--><!--[if IE 8 ]><html class="ie8" lang="zh-cn"><![endif]--><!--[if IE 9 ]><html class="ie9" lang="zh-cn"><![endif]--><!--[if (gt IE 9)|!(IE)]><!--><html lang="zh-cn"><!--<![endif]--><html><head><meta charset="utf-8"><meta name="renderer" content="webkit"><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"><link rel="shortcut icon" href="https://s3.ssl.qhimg.com/static/c56696ff943031e3.ico" type="image/x-icon"/><script>/* 用于通过 smarty 获取一些配置信息和属性 */
+var App = {
+    config:{
+        /* 频道页，首页，seo 页面上定义，用于频道页逻辑，cpm 广告逻辑, 详情页中该值为空 */
+        guid: '',
+        /* 频道页，首页，seo 页面上定义，用于频道页逻辑，cpm 广告逻辑, 详情页中该值为空 */
+        cid: '',
+        /* 详情页取值 1'， 频道页取值 $channelId。主要用于一些广告打点时候属性值的拼接，这个要沟通一下，看看是不是需要。 */
+        topChannelId: '1',
+        /* 频道名称，目前只用于在频道页上排行上的名称, 频道页取值为 $data->first_name, 详情页取值为 $channel_name */
+        channelName: '新闻',
+        /* 使用 smarty 函数获取，去掉 getfromUrl 方法 */
+        from: '',
+        /* 在频道页上定义，在请求信息流接口的时候作为参数，格式为 local_653000_650000 */
+        infoflow_city_code: '',
+        /* 在详情页中使用 详情页中类目的 id，频道页上也有在用 */
+        secondId: '010100',
+        /* 用于详情页中初始化评论的时候，用来作为评论的 id */
+        itemkey: 'http%3A%2F%2Fnews.btime.com%2F%2F20170817%2Fn2018014.shtml',
+        /* 详情页中调用数据接口的时候作为参数 */
+        gid: "32lpmvrr9oo8ooq6u237rlvalgl",
+        /* 详情页中定义，获取相关新闻的时候调用 */
+        rid: "711217f3fdd5fdce",
+        /* 详情页中定义，获取相关新闻的时候调用 */
+        type: "news",
+        domainStr: "btime.com",
+        /* 页面的session_id，每次刷新改变 */
+        refreshId: "",
+        /* requirejs 配置信息 */
+        requirejs: { baseUrl: "http://s7.qhres.com/!bb8eefbc/" }
+    },
+    data: {
+        /* 频道页和详情页的初始广告数据 */
+        ads: [{"adp_id":"4","ads":[{"ad_device":0,"ad_id":"14","ad_material":{"app_id":"_14","height":100,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u2810054\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>","text":"","thumbnail":"","url":"","width":728},"ad_name":"\u5c0f\u901a\u680f-\u8be6\u60c5\u9875-\u767e\u5ea6","adp_id":"4","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"14\",\"ad_name\":\"\\u5c0f\\u901a\\u680f-\\u8be6\\u60c5\\u9875-\\u767e\\u5ea6\",\"adp_id\":\"4\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"5","ads":[{"ad_device":0,"ad_id":"51","ad_material":{"app_id":"_51","height":120,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script>\r\nvar mediav_ad_pub = 'qu3qcR_1981351';\r\nvar mediav_ad_width = '728';\r\nvar mediav_ad_height = '90';\r\n<\/script>\r\n<script type=\"text\/javascript\" language=\"javascript\" charset=\"utf-8\" src=\"\/\/static.mediav.com\/js\/mvf_g2.js\"><\/script>","text":"","thumbnail":"","url":"","width":728},"ad_name":"\u5c0f\u901a\u680f-\u805a\u6548","adp_id":"5","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"51\",\"ad_name\":\"\\u5c0f\\u901a\\u680f-\\u805a\\u6548\",\"adp_id\":\"5\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"6","ads":[{"ad_device":0,"ad_id":"1278","ad_material":{"app_id":"_1278","height":300,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u3037521\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>","text":"","thumbnail":"","url":"","width":480},"ad_name":"\u56fe\u96c6\u5c01\u5e95\u9875\u77e9\u5f62","adp_id":"6","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"1278\",\"ad_name\":\"\\u56fe\\u96c6\\u5c01\\u5e95\\u9875\\u77e9\\u5f62\",\"adp_id\":\"6\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"7","ads":[{"ad_device":0,"ad_id":"1277","ad_material":{"app_id":"_1277","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u3037516\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>","text":"","thumbnail":"","url":"","width":250},"ad_name":"\u56fe\u96c6\u65b9\u56fe\u5e7f\u544a","adp_id":"7","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"1277\",\"ad_name\":\"\\u56fe\\u96c6\\u65b9\\u56fe\\u5e7f\\u544a\",\"adp_id\":\"7\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"8","ads":[{"ad_device":0,"ad_id":"83","ad_material":{"app_id":"_83","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u2880852\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u6b63\u6587\u5185\u5d4c-\u767e\u5ea6","adp_id":"8","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"83\",\"ad_name\":\"\\u6b63\\u6587\\u5185\\u5d4c-\\u767e\\u5ea6\",\"adp_id\":\"8\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"12","ads":[{"ad_device":0,"ad_id":"1221","ad_material":{"app_id":"_1221","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\" src=\"\/\/d.89h8.com\/btime\/top\/ny.js\"><\/script>\r\n<script type=\"text\/javascript\" src=\"\/\/d.89h8.com\/btime\/hqtopny_yn2.js\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u67ef\u57fa\u81ea\u6709\u8be6\u60c5\u53f3\u4e00\u65b0\u4ee3\u7801","adp_id":"12","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"1221\",\"ad_name\":\"\\u67ef\\u57fa\\u81ea\\u6709\\u8be6\\u60c5\\u53f3\\u4e00\\u65b0\\u4ee3\\u7801\",\"adp_id\":\"12\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]},{"adp_id":"13","ads":[{"ad_device":0,"ad_id":"456","ad_material":{"app_id":"_456","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script>\r\nvar mediav_ad_pub = 'mRHCB0_2053973';\r\nvar mediav_ad_width = '300';\r\nvar mediav_ad_height = '250';\r\n<\/script>\r\n<script type=\"text\/javascript\" language=\"javascript\" charset=\"utf-8\"  src=\"\/\/static.mediav.com\/js\/mvf_g2.js\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u53f3\u4fa7-\u56fa\u5b9a\u4f4d-300-250-\u963f\u91cc","adp_id":"13","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"456\",\"ad_name\":\"\\u53f3\\u4fa7-\\u56fa\\u5b9a\\u4f4d-300-250-\\u963f\\u91cc\",\"adp_id\":\"13\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0},{"ad_device":0,"ad_id":"45","ad_material":{"app_id":"_45","height":600,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script charset=\"gbk\" src=\"https:\/\/phs.tanx.com\/ex?i=mm_116268435_15488688_63918059\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u77e9\u5f62\u5e7f\u544a-\u64ce\u5929\u67f1-\u8be6\u60c5\u9875-\u963f\u91cc","adp_id":"13","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"45\",\"ad_name\":\"\\u77e9\\u5f62\\u5e7f\\u544a-\\u64ce\\u5929\\u67f1-\\u8be6\\u60c5\\u9875-\\u963f\\u91cc\",\"adp_id\":\"13\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":1}]},{"adp_id":"14","ads":[{"ad_device":0,"ad_id":"46","ad_material":{"app_id":"_46","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u2954928\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>\r\n","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u767e\u5ea6x-\u65b9\u56feb2\u5927\u5bb6\u90fd\u5728\u770b\u4e0b","adp_id":"14","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"46\",\"ad_name\":\"\\u767e\\u5ea6x-\\u65b9\\u56feb2\\u5927\\u5bb6\\u90fd\\u5728\\u770b\\u4e0b\",\"adp_id\":\"14\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":1}]},{"adp_id":"15","ads":[{"ad_device":0,"ad_id":"265","ad_material":{"app_id":"_265","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script charset=\"gbk\" src=\"https:\/\/phs.tanx.com\/ex?i=mm_116268435_15488688_63914053\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u767e\u5ea6-\u53f3\u4fa74\u8be6\u60c5\u9875","adp_id":"15","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"265\",\"ad_name\":\"\\u767e\\u5ea6-\\u53f3\\u4fa74\\u8be6\\u60c5\\u9875\",\"adp_id\":\"15\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":1}]},{"adp_id":"16","ads":[{"ad_device":0,"ad_id":"244","ad_material":{"app_id":"_244","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script charset=\"gbk\" src=\"https:\/\/phs.tanx.com\/ex?i=mm_116268435_15488688_107418503\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u77e9\u5f62\u5e7f\u544a--\u8be6\u60c5\u9875\u65b9\u56fea4 \u66ff\u6362\u8c37\u6b4c","adp_id":"16","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"244\",\"ad_name\":\"\\u77e9\\u5f62\\u5e7f\\u544a--\\u8be6\\u60c5\\u9875\\u65b9\\u56fea4 \\u66ff\\u6362\\u8c37\\u6b4c\",\"adp_id\":\"16\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":1}]},{"adp_id":"17","ads":[{"ad_device":0,"ad_id":"125","ad_material":{"app_id":"_125","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script charset=\"gbk\" src=\"https:\/\/phs.tanx.com\/ex?i=mm_116268435_15488688_63906589\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u77e9\u5f62\u5e7f\u544a-\u60ac\u505c-\u8be6\u60c5\u9875-\u963f\u91cc\u53f36","adp_id":"17","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"125\",\"ad_name\":\"\\u77e9\\u5f62\\u5e7f\\u544a-\\u60ac\\u505c-\\u8be6\\u60c5\\u9875-\\u963f\\u91cc\\u53f36\",\"adp_id\":\"17\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0},{"ad_device":0,"ad_id":"1215","ad_material":{"app_id":"_1215","height":250,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\" src=\"\/\/d.89h8.com\/btime\/top\/ny.js\"><\/script>\r\n<script type=\"text\/javascript\" src=\"\/\/d.89h8.com\/btime\/hqtopny_yn3.js\"><\/script>","text":"","thumbnail":"","url":"","width":300},"ad_name":"\u67ef\u57fa\u8be6\u60c5\u9875\u53f3\u4fa7\u60ac\u505c","adp_id":"17","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"1215\",\"ad_name\":\"\\u67ef\\u57fa\\u8be6\\u60c5\\u9875\\u53f3\\u4fa7\\u60ac\\u505c\",\"adp_id\":\"17\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":1}]},{"adp_id":"120","ads":[{"ad_device":0,"ad_id":"1407","ad_material":{"app_id":"_1407","height":90,"is_show_close":0,"is_show_mark":0,"mode":"html","src":"<script type=\"text\/javascript\">\r\n    var cpro_id = \"u2810054\";\r\n<\/script>\r\n<script type=\"text\/javascript\" src=\"http:\/\/cpro.baidustatic.com\/cpro\/ui\/c.js\"><\/script>","text":"","thumbnail":"","url":"","width":728},"ad_name":"\u8be6\u60c5\u9875\u9876\u901a","adp_id":"120","adp_src":"cpm","adp_title":"","channel_id":"all","s_log":"{\"ad_id\":\"1407\",\"ad_name\":\"\\u8be6\\u60c5\\u9875\\u9876\\u901a\",\"adp_id\":\"120\",\"adp_type\":\"fixed\",\"advert_type\":\"cpt\",\"channel_id\":\"010100\",\"daily_bound\":0,\"dev_id\":\"55a838f2-82f2-11e7-a661-6c92bf05883d\",\"frequency_control\":0,\"scene_id\":\"1\",\"ssp_src\":\"cpm\",\"user_id\":\"\"}","scene_id":"1","type":2,"weight":0}]}],
+        /* 频道页焦点图数据 */
+        focus_imgs: null
+    },
+    router: {
+        /* 定义在频道页（channel.html, channel_cms.html, index.html），用于 weblog 打点，频道页获取数据请求中参数 */
+        /* 注意：在common/nav.js中, router.channel被从数组改写成了 'index' or 'recommend'等等 */
+        channel: null
+    },
+    api: {
+        playSwf: 'https://s2.ssl.qhimg.com/static/d50e060387631420.swf' // 全站通用的播放器地址
+    }
+};
+
+// api接口切换
+var apiDomain = 'http://pc.api.btime.com',
+    webRoot = 'http://www.btime.com';
+
+if (App.config.domainStr == "brtn.cn") {
+    apiDomain = 'http://www.brtn.cn';
+    webRoot = 'http://www.brtn.cn';
+}
+
+// 用户中心接口切换
+var apiUser = "http://user.btime.com";
+if (App.config.domainStr == "brtn.cn") {
+    apiUser = "http://www.brtn.cn/usercenter";
+}
+
+if(App.data.infoFlow_init) {
+    App.data.infoFlow_init = App.data.infoFlow_init.data ? App.data.infoFlow_init.data : App.data.infoFlow_init;
+}</script>
+
+<script>if (/AppleWebKit.*Mobile/i.test(navigator.userAgent) || (/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/.test(navigator.userAgent))) {window.location.href = "http://m.btime.com/item/router?gid=32lpmvrr9oo8ooq6u237rlvalgl";}App.config.pageType = 1;var G_start_time = new Date();var gid= '32lpmvrr9oo8ooq6u237rlvalgl';App.config.itemPageType = 3;App.config.pid = 'item-news';App.config.is_show_comment = '0';</script><title>从站起来到强起来：中国共产党引领伟大复兴-北京时间</title><meta name="Keywords" content="中国共产党,从站,复兴,引领,起来"><meta name="Description" content="“我们一定不负重托，不辱使命。”这是习近平总书记上任伊始作出的庄严承诺。五年过去，中国发展站到新的历史起点上，中国特色社会主义进入新的发展阶段，实现了从站起来、富起来到强起来的历史性飞跃，世界越来越看好中国。"><base target="_blank"><script>window.document.domain="btime.com";</script><script src="https://www.so.com/zt/api/qhcs.js" ></script><link rel="stylesheet" type="text/css" href="//s3.ssl.qhimg.com/static/f5103c18522858c2/news/item_common.css"><link rel="stylesheet" href="//s0.ssl.qhimg.com/static/10ec7245701bfc17/news/detail.css"><style>.layout{width: 730px;padding-top: 30px;}html, body, #wrap {height: 100%;}body>#wrap {height: auto;min-height: 100%;}#box {padding-bottom: 40px;}  /* 必须使用和footer相同的高度 */.footer {position: relative;margin-top: -40px; /* footer高度的负值 */height: 40px;clear:both;}#main{padding-top: 0px;}</style><base target="_blank"></head><body><div id="wrap"><div id="box"><!-- 通用顶部 -->
+
+<div id="header" class="header">
+
+        <div class="navbar j-navbar">
+        <div class="navbar-outer">
+            <div class="navbar-inner">
+                <div class="nav-show">
+                    <ul class="nav clearfix j-nav-channel">
+                                                                        <li>
+                                                        <a href="http://www.btime.com/" target="_self" title="首页">首页</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/recommend" target="_self" title="推荐">推荐</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/live" target="_self" title="直播">直播</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/video" target="_self" title="视频">视频</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/news" target="_self" title="新闻">新闻</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/ent" target="_self" title="娱乐">娱乐</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/sports" target="_self" title="体育">体育</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/finance" target="_self" title="财经">财经</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/auto" target="_self" title="汽车">汽车</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/tech" target="_self" title="科技">科技</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/House" target="_self" title="房产">房产</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/mil" target="_self" title="军事">军事</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/life" target="_self" title="生活">生活</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/society" target="_self" title="社会">社会</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/fun" target="_self" title="搞笑">搞笑</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/Health" target="_self" title="健康">健康</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/local/110100" target="_self" title="北京">北京</a>
+                        </li>
+                                            </ul>
+                    <a class="nav-item-more j-open-navbar" href="javascript:;"></a>
+                </div>
+                <div class="nav-hide clearfix">
+                    <ul class="nav nav-more nav-channel j-nav-channel clearfix">
+                                                                        <li>
+                                                        <a href="http://www.btime.com/btv/btvsy_index" target="_self">BTV</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/digi" target="_self">数码</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/voice" target="_self">评论</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/culture" target="_self">文化</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/world" target="_self">国际</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/financial" target="_self">金融</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/stock" target="_self">证券</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/football" target="_self">足球</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/NBA" target="_self">篮球</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/Star" target="_self">明星</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/movie" target="_self">电影</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/TV" target="_self">电视</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/internet" target="_self">互联网</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/phone" target="_self">手机</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/game" target="_self">游戏</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/Weapon" target="_self">武器</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/history" target="_self">历史</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/fashion" target="_self">时尚</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/baby" target="_self">亲子</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/tour" target="_self">旅游</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/astro" target="_self">星座</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/emotion" target="_self">情感</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/education" target="_self">教育</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/commonweal" target="_self">公益</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/wm" target="_self">时间号</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/bjMediaXjb" target="_self">新京报</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/bjMediaFzwb" target="_self">法制晚报</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/bjMediaBjqnb" target="_self">北京青年报</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/bjMediaCb" target="_self">北京晨报</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://www.btime.com/cyol" target="_self">中青报</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://record.btime.com/show?uid=702881" target="_self">北京人民广播电台</a>
+                        </li>
+                                                                        <li>
+                                                        <a href="http://record.btime.com/show?uid=674469" target="_self">国家大剧院</a>
+                        </li>
+                                            </ul>
+                    <ul class="nav nav-tab clearfix">
+                        <li><a data-target='#local-wrap' data-type="local" href="javascript:;">地方频道</a></li>
+                        <li><a href="javascript:;" data-target='#btv-wrap' data-type="btv">精品栏目</a></li>
+                    </ul>
+                    <div class="tab-content clearfix">
+                        <div id="local-wrap">
+                            <!-- local -->
+                        </div>
+                        <div id="btv-wrap">
+                            <!-- btv -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- logo -->
+                        <div class="nav-logo">
+                <a href="http://www.btime.com/" target='_self'>
+                    <img src="http://p0.cdn.btime.com/t01d0dbbee65be739d9.png" width="100" height="25" alt="北京时间">
+                </a>
+            </div>
+            
+            <!-- 用户登录 -->
+            <div class="userinfo-detail" id="userinfo">
+                <ul class="login-before nav-info nav-login">
+                    <li class="">
+                        <a href="javascript:;" class="j-user-login">
+                            <img class='userpic' src="//p0.ssl.cdn.btime.com/t01914db8feceed0bc7.png" alt="avator">登录
+                        </a>
+                    </li>
+                    <li class="login-divide">/</li>
+                    <li><a href="javascript:;" class="j-user-register">注册</a></li>
+                </ul>
+                <div class="login-after nav-login" style="display: none;">
+                                            <a class="user-info-wrap" href="http://user.btime.com">
+                            <img class="user-info-pic" src="//p4.ssl.cdn.btime.com/t0158b474d28812e45f.png">
+                            <span class="user-info-cycle" style="display: none"></span>
+                        </a>
+                                        <div class="nav-user-info-wrap">
+                        <ul class="nav-user-info">
+                                                            <li class="">
+                                    <a class="user-info" href="http://user.btime.com">
+                                        <span class="username"></span>
+                                        <img class="user-type">
+                                    </a>
+                                </li>
+                                <li><a href="http://user.btime.com/message" class="user-info-unread">站内信 (<span class="unread-time">0</span>)</a></li>
+                                <li><a href="javascript:;" class="j-user-logout">退出</a></li>
+                                                    </ul>
+                        <img src="//p0.ssl.cdn.btime.com/t01c71c771648d329be.png" alt="pic" class="user-info-triangle">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+<div id="main"></div><div id="atom-totop" class="fixedtool">
+    <a class="fixedtool-item client" href="http://app.btime.com/">
+        <i class="icon"></i><span class="text">App</span>
+        <img class="qrcode" src="//p1.ssl.cdn.btime.com/t01e2db9f3829e8e81b.png" alt="北京时间客户端">
+    </a>
+        <a class="fixedtool-item home" href="http://www.btime.com" target="_self">
+        <i class="icon"></i><span class="text">首页</span>
+    </a>
+    
+        <a class="fixedtool-item feedback" href="http://www.btime.com/feedback.html">
+        <i class="icon"></i><span class="text">反馈</span>
+    </a>
+    
+    <a class="fixedtool-item totop" href="#" target="_self">
+        <i class="icon"></i>
+    </a>
+</div>
+<script type="text/html" id="j-tpl-province"><ul class="nav nav-province">
+        {{each list as value key}}
+            {{if active == value.upper }}<li class="active">{{else}}<li>{{/if}}
+                {{if value.unique }}
+                    <a href="{{value.id | catUrl}}" data-type="province" data-unique="1" data-id="{{value.id}}">{{value.title | cutCityProvince}}</a>
+                {{else}}
+                    <a href="{{value.id | catUrl}}" data-type="province" data-id="{{value.id}}">{{value.title | cutCityProvince}}</a>
+                {{/if}}
+            </li>
+        {{/each}}
+    </ul></script>
+
+<script type="text/html" id="j-tpl-city"><ul class="nav nav-city" data-province="{{province_code}}">
+        <li>
+            <a href="javascript:;" data-type="back" data-wrap="local">返回上一级</a>
+        </li>
+        {{if active == province_code }}<li class="active">{{else}}<li>{{/if}}
+            <a href="{{province_code | catUrl}}" data-type="city" data-id="{{province_code}}">{{province_name | cutCityProvince}}</a>
+        </li>
+        {{each list as value key}}
+        {{if active == value.id }}<li class="active">{{else}}<li>{{/if}}
+            <a href="{{value.id | catUrl}}" data-type="city" data-id="{{value.id}}">{{value.title | cutCityProvince}}</a>
+        </li>
+        {{/each}}
+    </ul></script>
+
+<script type="text/html" id="j-tpl-btv-first"><ul class="nav nav-btv">
+        {{each list as value key}}
+        {{if active == value.upper }}<li class="active">{{else}}<li>{{/if}}
+            {{if value.unique }}
+                <a href="{{value.url}}" data-type="btv" data-unique="1" data-key="{{key}}" data-url="{{value.url}}">{{value.cname}}</a>
+            {{else}}
+                <a href="{{value.url}}" data-type="btv" data-key="{{key}}" data-url="{{value.url}}">{{value.cname}}</a>
+            {{/if}}
+        </li>
+        {{/each}}
+    </ul></script>
+
+<script type="text/html" id="j-tpl-btv-next"><ul class="nav nav-btv-next" data-btv="{{btv_code}}">
+        <li>
+            <a href="javascript:;" data-type="back" data-wrap="btv">返回上一级</a>
+        </li>
+        {{each list as value key}}
+        {{if active == value.cindex }}<li class="active">{{else}}<li>{{/if}}
+            <a href="{{value.url}}" data-type="btv-next" data-url="{{value.url}}">{{value.cname}}</a>
+        </li>
+        {{/each}}
+    </ul></script>
+
+ 
+
+        
+        <div class="layout">
+            <div id="mainCont" class="col-main">
+                <div class="article-container">
+                    <div class="article" bk="N-content">
+                        <h1 id="title" class="title" data-gid="32lpmvrr9oo8ooq6u237rlvalgl" data-channel="1" data-rid="711217f3fdd5fdce" data-type="news">从站起来到强起来：中国共产党引领伟大复兴</h1>
+                        <div class="content-info" bk="content-info">
+                            <ul>
+                                <li><span class="content-large" title="增大字号">A+</span></li>
+                                <li><span class="content-small" title="减小字号">A-</span></li>
+                            </ul>
+                            <span class="time">2017-08-17 08:14:06</span>
+                            <span class="read-count">阅读 (85.5万)</span>
+                                                                                    <span class="cite">人民日报&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                                                    </div>
+                        <div class="content-text" id="content-text" bk="content-text">
+                            <!-- 文章简介 -->
+                                                                            <div class="video-box" data-vid="2397782">
+                <div class="video-view">
+                    <div id="video-player" class="video_player"></div>
+                    <div class="ViewMask">
+                        <a href="" class="video-close">x</a>点击按住视频可拖动
+                    </div>
+                    <div class="playplaceholder">
+                        <div class="placeholdermask"></div>
+                        <span class="img-cover"></span>
+                        <img class="placeholderimg" src="http://p7.qhimg.com/t0185d2f276b57bf354.png?size=700x393">
+                    </div>
+                </div>
+                                <div class="video-info">
+                    <span></span>
+                    <h2>从站起来到强起来：中国共产党引领伟大复兴</h2>
+                </div>
+                            </div>
+                                            <p style="text-indent: 2em; text-align: left;">“我们一定不负重托，不辱使命。”这是习近平总书记上任伊始作出的庄严承诺。五年过去，中国发展站到新的历史起点上，中国特色社会主义进入新的发展阶段，实现了从站起来、富起来到强起来的历史性飞跃，世界越来越看好中国。</p>
+                                            <p style="text-indent: 2em; text-align: left;">如今，中国临近“两个一百年”目标的历史交汇点。关键当口，继续引领历经沧桑的东方大国走向复兴，成为习近平和中国共产党人的历史使命。</p>
+                                                <p class="content-img">
+                    <img src="https://p3.ssl.cdn.btime.com/t0174a1b6d21921bb44.jpg?size=700x439">
+                                    </p>
+                                <p style="text-indent: 2em; text-align: left;"><strong>一、这五年我们办成了不少大事，我国发展站到新的历史起点上</strong></p>
+                                            <p style="text-indent: 2em; text-align: left;">这五年是“党和国家发展进程中很不平凡的5年”，习近平的话让人深有感触。</p>
+                                            <p style="text-indent: 2em; text-align: left;">首艘国产航母下水、国产大型客机C919成功首飞、“天眼”探空、“蛟龙”入海、“墨子号”发射升空……五年间，一系列“国之重器”让世界刮目相看。这些激动人心的场景，让中国人的信心和梦想被不断点燃。</p>
+                                            <p style="text-indent: 2em; text-align: left;">而改革发展稳定、内政外交国防、治党治国治军等各方面，在习近平的领导下，取得了历史性成就和变革。五年来，党中央推出一系列重大战略举措，出台一系列重大方针政策，推进一系列重大工作，解决了许多长期想解决而没有解决的难题，办成了许多过去想办而没有办成的大事。</p>
+                                            <p style="text-indent: 2em; text-align: left;">“环顾世界，没有一个国家能像当今中国这样，以一种说到做到、只争朝夕的方式推进改革。”对这场变革，有外媒如此评价。</p>
+                                            <p style="text-indent: 2em; text-align: left;">认清历史方位，才能看清前行的方向。近代以来，从落后挨打到新中国成立“站起来”、改革开放“富起来”再到“强起来”，我们经历了很多大风大浪。如今，民族复兴的接力棒交到了我们这一代人的手上。</p>
+                                            <p style="text-indent: 2em; text-align: left;">习近平强调，“即将召开的党的十九大，是在全面建成小康社会决胜阶段、中国特色社会主义发展关键时期召开的一次十分重要的大会。”而大会选出的新一届中央委员会，将承担收官第一个百年奋斗目标、开启第二个百年奋斗目标的历史重任。</p>
+                                                <p class="content-img">
+                    <img src="https://p2.ssl.cdn.btime.com/t019733b0a849387312.jpg?size=700x525">
+                                    </p>
+                                <p style="text-indent: 2em; text-align: left;"><strong>二、站到新的历史起点，要有正确的方向，要有新的精神状态和奋斗姿态</strong></p>
+                                            <p style="text-indent: 2em; text-align: left;">越是接近梦想实现，越要头脑清醒、居安思危。新的历史起点上，“怎么看、怎么干”就变得极为重要。</p>
+                                            <p style="text-indent: 2em; text-align: left;">道路决定命运，道路就是党的生命。对中国这样的大国来说，尤其如此。经过党带领人民近百年的持续奋斗，现在，我们前所未有地靠近世界舞台中心。路走对了，就不怕遥远。</p>
+                                            <p style="text-indent: 2em; text-align: left;">“中国特色社会主义是改革开放以来党的全部理论和实践的主题”，这是习近平作出的明确判断。</p>
+                                            <p style="text-indent: 2em; text-align: left;">“全党必须高举中国特色社会主义伟大旗帜，牢固树立中国特色社会主义道路自信、理论自信、制度自信、文化自信，确保党和国家事业始终沿着正确方向胜利前进。”这是习近平对于全党的明确要求。</p>
+                                            <p style="text-indent: 2em; text-align: left;">中国特色社会主义进入了新的发展阶段，需要解决新的问题。一方面，经过改革开放近40年的发展，我国社会生产力水平明显提高;人民生活显著改善，对美好生活的向往更加强烈，人民群众的需要呈现多样化多层次多方面的特点。另一方面，面临的风险挑战不少，地区发展还很不平衡，仍有4000多万贫困人口没有脱贫，污染治理和生态问题突出，发展的短板不少。</p>
+                                            <p style="text-indent: 2em; text-align: left;">如何应对挑战?就是要直面问题，不回避、不绕开。我们看到，五年来，习近平始终坚持问题导向，解决了一大批老百姓反映强烈、期盼解决的问题。接下来，决胜全面小康社会，他强调，特别要打好防范化解重大风险、精准脱贫、污染防治这“三大攻坚战”，坚定不移深化供给侧结构性改革，推动经济社会持续健康发展。</p>
+                                            <p style="text-indent: 2em; text-align: left;">挑战面前，也要有底线思维。增强忧患意识、亮明底线，才能作出准确研判，及时采取应对之策。正如习近平所言，要“看到形势发展变化给我们带来的风险，从最坏处着眼，做最充分的准备，朝好的方向努力，争取最好的结果”。</p>
+                                                <p class="content-img">
+                    <img src="https://p1.ssl.cdn.btime.com/t01187b6d300f9d5ac2.jpg?size=700x494">
+                                    </p>
+                                <p style="text-indent: 2em; text-align: left;"><strong>三、实现中华民族伟大复兴，关键在党</strong></p>
+                                            <p style="text-indent: 2em; text-align: left;">复兴道路上，全面建成小康社会，实现第一个百年奋斗目标，是又一座重要里程碑。第一个百年奋斗目标如期实现后，第二个百年奋斗目标就要开局起步，这是一个接续奋斗的过程，前方的路还很长。</p>
+                                            <p style="text-indent: 2em; text-align: left;">“历史使命越光荣，奋斗目标越宏伟，执政环境越复杂，我们就越要增强忧患意识，越要从严治党，使我们党永远立于不败之地。”“只有进一步把党建设好，确保我们党永葆旺盛生命力和强大战斗力，我们党才能带领人民成功应对重大挑战、抵御重大风险、克服重大阻力、解决重大矛盾，不断从胜利走向新的胜利。”习近平坚定地说道。</p>
+                                            <p style="text-indent: 2em; text-align: left;">办好中国的事情，关键在党。过去五年，中央打虎拍蝇、建章立制，反腐败斗争压倒性态势已经形成，党内政治生活气象更新，全党理想信念更加坚定、党性更加坚强，党自我净化、自我完善、自我革新、自我提高能力显著增强，人民群众感受到了切实的变化。这巩固了党的执政基础和群众基础，为我们取得各项成就提供了坚强的政治保证。</p>
+                                            <p style="text-indent: 2em; text-align: left;">实现更高质量、更有效率、更加公平、更可持续的发展，党在引领方向;改革啃“硬骨头”，离不开党凝聚共识;化解各类风险挑战，党的坚强有力至关重要。</p>
+            
+                                            <p style="text-indent: 2em; text-align: left;">接过历史的接力棒，在民族复兴新征程上，我们更需要不断加强和改善党的领导。正因如此，习近平清醒地指出，“全面从严治党永远在路上”。</p>
+                                            <p style="text-indent: 2em; text-align: left;">习近平告诫全党，要坚持问题导向，保持战略定力，推动全面从严治党向纵深发展，把全面从严治党的思路举措搞得更加科学、更加严密、更加有效，确保党始终同人民想在一起、干在一起，引领承载着中国人民伟大梦想的航船破浪前进，胜利驶向光辉的彼岸。</p>
+                                                </div>
+                                                    <a class="originaltext" href="http://news.btime.com//20170817/n2018014.shtml">查看原文</a>
+                        
+                        
+                                                    <div class="edit-info">责任编辑：李晓 (FZ039)</div>
+                                            </div>
+                </div>
+                <div class="N-mod comment-wrap">
+                    <div class="mod-hd">
+                        <h2>评论</h2>
+                    </div>
+                    <!--end mod-hd-->
+                    <div class="mod-bd">
+                        <div id="QIHOO360COMMENT"></div>
+                    </div>
+                    <!--end mod-bd-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <div id="banner-bottom" data-seed="21" class="seed-area layout" style="margin-top:30px;"></div>
+<div class="footer">
+    <p>北京新媒体（集团）有限公司 <a href="http://www.btime.com/aboutus.html">关于北京时间</a><span class="divider">|</span><span class="license" data-popup="popup" data-img="http://p5.qhimg.com/d/inn/c626639d/paizhao.jpg">网上传播视听节目许可证0103028号</span><span class="divider">|</span>京ICP备17010175号<span class="divider">|</span>Powered by 360搜索<span class="divider">|</span>Copyright © 2017 Btime.com, All Rights Reserved </p>
+</div>
+
+
+<script src="//s5.ssl.qhimg.com/static/fc6c3a128e1b4271/common/common_bundle.js" ></script>
+<script src="//s1.ssl.qhimg.com/static/905b7cefd31635fa/common/header_bundle.js" ></script>
+<script src="https://s3.ssl.qhimg.com/!e3780b03/swfobject-2.3.js" ></script>
+<script src="//s0.ssl.qhimg.com/static/de82110320583c8b/item/jqgallery.js" ></script>
+<script src="//s3.ssl.qhimg.com/static/20bd4ed7bded2369/common/videoplay.js" ></script>
+<script src="//s2.ssl.qhimg.com/static/f502ccd42d2d5173/item/zhanzhang.js" ></script>
+<script src="//s3.ssl.qhimg.com/static/262d143729ac49a6/item/detail.js" ></script>
+<script src="//s3.ssl.qhimg.com/static/a35a0e86bd5872d4/common/monitor_bundle.js" ></script>
+<script type="text/javascript">$(function() {
+        var basePar = {
+            pid: App.config.pid || '',
+            twoChannel:'Array',
+            threeChannel:'',
+            version: 'v3'
+        };
+
+        common_monitor.init({basePar: basePar});
+        qdas_monitor.init({basePar: $.extend({ p: 'QH_156_1#detail_article'}, basePar)});
+
+        var guid=monitor.util.getGuid();
+        monitorObj.init({
+            baseLog:'{"gid":"32lpmvrr9oo8ooq6u237rlvalgl","pvid":"1502936298881274_","rec_info":"{\\\"pvid\\\":\\\"1502936298881279_\\\"}","uid":"","channel_position":["item","detail",1],"user_id":"","referer":"","from":""}',
+            gid:'32lpmvrr9oo8ooq6u237rlvalgl',
+            isChannel:false,
+            pid:App.config.pid,
+            twoChannel:'Array',
+            guid:guid,
+            from:App.config.from
+        });
+    })
+
+    // 评论相关
+    $(function(){
+        if(App.config.is_show_comment=="1"){
+            $(".comment-wrap").show();
+        }else{
+            $(".comment-wrap").hide();
+        }
+        (function () {
+            function plfocus() {
+                $(".textarea-fw.textarea-bf").focus(function () {
+                    if (qboot.cookie.get('lf') == 1) {
+                    } else {
+                        $('.j-user-login').click();
+                    }
+                })
+            }
+
+            setTimeout(function () {
+                QHPass.$('.qh-cmt-reg').unbind("click").off('click').on('click', function (e) {
+                    e.preventDefault();
+                    $(".j-user-register").click();
+                });
+                QHPass.$('.qh-cmt-login').unbind("click").off('click').on('click', function (e) {
+                    e.preventDefault();
+                    $(".j-user-login").click();
+                });
+                plfocus();
+            }, 1000);
+        })();
+    })</script>
+<script>(function (G,D,s,c,p) { console.log(12);
+        c = {
+            UA:"UA-btime-000001",
+            NO_FLS:0,
+            WITH_REF:1,
+            URL:'https://s5.ssl.qhres.com/static/f8d95941ac8c5976.js'
+        };
+        G._iwt?G._iwt.track(c,p):(G._iwtTQ=G._iwtTQ || []).push([c,p]),!G._iwtLoading && lo();
+        function lo(t) {
+            G._iwtLoading=1;s=D.createElement("script");s.src=c.URL;
+            t=D.getElementsByTagName("script");t=t[t.length-1];
+            t.parentNode.insertBefore(s,t);
+        }
+    })(this,document);</script>
